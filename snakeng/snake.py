@@ -135,6 +135,15 @@ class SnakeGame(object):
 
         return Position(x=newx, y=newy)
 
+    def _opposite_dirs(self, dir1, dir2):
+        dirs = [dir1, dir2]
+        if (SnakeDirection.UP in dirs) and (SnakeDirection.DOWN in dirs):
+            return True
+        elif (SnakeDirection.LEFT in dirs) and (SnakeDirection.RIGHT in dirs):
+            return True
+
+        return False
+
     def process(self, direction_input=None):
         """
         Process a single frame of the game, and return the new game state
@@ -148,7 +157,8 @@ class SnakeGame(object):
             return
 
         if direction_input is not None:
-            self.state.snake_direction = direction_input
+            if not self._opposite_dirs(direction_input, self.state.snake_direction):
+                self.state.snake_direction = direction_input
 
         # Handle adding a new head segment in the current direction
         new_head = self._new_head()
