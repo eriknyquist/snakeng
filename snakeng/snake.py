@@ -104,7 +104,7 @@ class SnakeGameState(object):
 
         # draw the apple
         if self.apple_position is not None:
-            table[self.apple_position.y][self.apple_position.x] = '*'
+            table[self.apple_position.y][self.apple_position.x] = '@'
 
         rows = [''.join(row) for row in table]
         rows.reverse()
