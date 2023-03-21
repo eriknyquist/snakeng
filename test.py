@@ -13,8 +13,10 @@ runtime_data = {
 
 
 def frame_to_string(state):
+    table = []
+
     # Build the outer boundary/frame
-    table = [['-' for i in range(state.area_width)]]
+    table.append(('+' + ('-' * (state.area_width - 2)) + '+').split())
 
     for i in range(1, state.area_height - 2):
         row = ['|']
@@ -22,7 +24,12 @@ def frame_to_string(state):
         row.append('|')
         table.append(row)
 
-    table.append(['-' for i in range(state.area_width)])
+    scorestr = f"Score: {state.score:,}"
+    header = '+--' + scorestr
+    remaining = state.area_width - len(header)
+    header += "-" * (remaining - 1)
+    header += "+"
+    table.append([c for c in header])
 
     # Draw the snake
     for pos in state.snake_segments:

@@ -84,7 +84,7 @@ class SnakeGame(object):
     """
     Represents a single instance of a snake game
     """
-    def __init__(self, width=60, height=40, wall_wrap=True, initial_direction=SnakeDirection.DOWN):
+    def __init__(self, width=40, height=30, wall_wrap=True, initial_direction=SnakeDirection.DOWN):
         self.state = SnakeGameState(area_width=width, area_height=height, snake_direction=initial_direction)
         self.state.snake_segments.append(Position(x=int(width / 2), y=int(height / 2)))
         self.state.apple_position = self._new_apple_position()
@@ -93,8 +93,8 @@ class SnakeGame(object):
     def _new_apple_position(self):
         ret = self.state.snake_segments[-1]
         while ret in self.state.snake_segments:
-            xval = random.randrange(1, self.state.area_width - 1)
-            yval = random.randrange(1, self.state.area_height - 1)
+            xval = random.randrange(1, self.state.area_width - 2)
+            yval = random.randrange(1, self.state.area_height - 2)
             ret = Position(x=xval, y=yval)
 
         return ret
