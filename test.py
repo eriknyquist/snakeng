@@ -8,7 +8,8 @@ from snakeng.snake import SnakeGame, SnakeDirection
 FPS = 15
 
 runtime_data = {
-    'last_direction': None
+    'last_direction': None,
+    'paused': False
 }
 
 
@@ -23,6 +24,8 @@ def keypress_event(e):
         ret = SnakeDirection.LEFT
     elif e.name == 'right':
         ret = SnakeDirection.RIGHT
+    elif e.name == 'p':
+        runtime_data['paused'] = not runtime_data['paused']
 
     runtime_data['last_direction'] = ret
 
@@ -38,11 +41,12 @@ def main():
     keyboard.on_press(keypress_event)
 
     while True:
-        new_state = game.process(runtime_data['last_direction'])
-        draw_screen(new_state)
+        if not runtime_data['paused']:
+            new_state = game.process(runtime_data['last_direction'])
+            draw_screen(new_state)
 
-        if new_state.dead:
-            return
+            if new_state.dead:
+                return
 
         time.sleep(frame_delta)
 
