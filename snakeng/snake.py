@@ -79,6 +79,40 @@ class SnakeGameState(object):
         self.apple_position = attrs['apple_position']
         return self
 
+    def __str__(self):
+        table = []
+
+        # Build the outer boundary/frame
+        table.append([c for c in ('+' + ('-' * (self.area_width - 2)) + '+')])
+
+        for i in range(0, self.area_height - 2):
+            row = ['|']
+            row.extend([' ' for x in range(self.area_width - 2)])
+            row.append('|')
+            table.append(row)
+
+        scorestr = f"Score: {self.score:,}"
+        header = '+--' + scorestr
+        remaining = self.area_width - len(header)
+        header += "-" * (remaining - 1)
+        header += "+"
+        table.append([c for c in header])
+
+        # Draw the snake
+        for pos in self.snake_segments:
+            table[pos.y][pos.x] = '#'
+
+        # draw the apple
+        if self.apple_position is not None:
+            table[self.apple_position.y][self.apple_position.x] = '*'
+
+        rows = [''.join(row) for row in table]
+        rows.reverse()
+        return '\n'.join(rows)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class SnakeGame(object):
     """
