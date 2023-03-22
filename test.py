@@ -1,5 +1,7 @@
 import time
 import sys
+import threading
+import sched
 
 import keyboard
 
@@ -7,9 +9,14 @@ from snakeng.snake import SnakeGame, SnakeDirection
 
 FPS = 24
 
+stopped = threading.Event()
+scheduler = sched.scheduler(time.time, time.sleep)
+
+
 runtime_data = {
     'last_direction': None,
-    'paused': False
+    'paused': False,
+    'scheduler_event': None
 }
 
 
@@ -30,25 +37,29 @@ def keypress_event(e):
     runtime_data['last_direction'] = ret
 
 def draw_screen(state):
-    sys.stdout.write(chr(27) + "[2J\n")
+    sys.stdout.write("\033[2J\n")
     sys.stdout.write(state.to_string())
     sys.stdout.flush()
 
 
+def process_frame(game, frame_time):
+    runtime_data["scheduler_event"] = scheduler.enterabs(time.time() + frame_time, 0, process_frame, argument=(game, frame_time))
+
+    if not runtime_data['paused']:
+        new_state = game.process(runtime_data['last_direction'])
+        draw_screen(new_state)
+
+        if new_state.dead:
+            scheduler.cancel(runtime_data["scheduler_event"])
+            stopped.set()
+    
 def main():
     game = SnakeGame()
-    frame_delta = 1.0 / float(FPS)
+    frame_time = 1.0 / float(FPS)
     keyboard.on_press(keypress_event)
 
-    while True:
-        if not runtime_data['paused']:
-            new_state = game.process(runtime_data['last_direction'])
-            draw_screen(new_state)
-
-            if new_state.dead:
-                return
-
-        time.sleep(frame_delta)
+    runtime_data["scheduler_event"] = scheduler.enterabs(time.time() + frame_time, 0, process_frame, argument=(game, frame_time))
+    scheduler.run()
 
 if __name__ == "__main__":
     main()

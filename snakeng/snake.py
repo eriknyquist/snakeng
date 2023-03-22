@@ -11,15 +11,26 @@ FAST_SCORE_THRESHOLD = 70
 class SnakeDirection(object):
     """
     Enumerates all possible directions
+
+    :cvar int LEFT: Left movement direction
+    :cvar int RIGHT: Right movement direction
+    :cvar int UP: Upwards movement direction
+    :cvar int DOWN: Downwards movement direction
     """
-    LEFT = 0     # Left arrow
-    RIGHT = 1    # Right arrow
-    UP = 2       # Up arrow
-    DOWN = 3     # Down arrow
+    LEFT = 0
+    RIGHT = 1
+    UP = 2
+    DOWN = 3
+
 
 class SnakeSpeed(object):
     """
     Enumerates all possible movement speeds for the snake
+
+    :cvar int FASTER: Fastest movement speed (1 segment per frame)
+    :cvar int FAST: Fast movement speed (1 segment every 2 frames)
+    :cvar int MEDIUM: Medium movement speed (1 segment every 3 frames)
+    :cvar int SLOW: Slowest movement speed (1 segment every 4 frames)
     """
     FASTER = 1
     FAST = 2
@@ -27,7 +38,7 @@ class SnakeSpeed(object):
     SLOW = 4
 
 
-MOVEMAP = {
+_MOVEMAP = {
     SnakeDirection.LEFT: (-1, 0),
     SnakeDirection.RIGHT: (1, 0),
     SnakeDirection.UP: (0, 1),
@@ -64,7 +75,18 @@ class Position(object):
 @dataclass
 class SnakeGameState(object):
     """
-    Represents the state of the game for a single frame
+    Represents the state of the game for a single frame.
+
+    :ivar int area_width: Width of the game area
+    :ivar int area_height: Height of the game area
+    :ivar list snake_segments: List of Position objects representing the current \
+        position of each segment of the snake
+    :ivar int snake_direction: Current movement direction of the snake, one of \
+        the constants defined by the SnakeDirection class
+    :ivar int score: Number of apples the snake has collected
+    :ivar apple_position: Position object representing the current position of \
+        the apple, or None if there is no apple.
+    :ivar bool dead: True if the snake has died
     """
     area_width: int = 120
     area_height: int = 120
@@ -75,6 +97,12 @@ class SnakeGameState(object):
     dead: bool = False
 
     def serialize(self):
+        """
+        Serialize the instance to a dict suitable for use with json.dump
+
+        :return: serialized data as a dict
+        :rtype: dict
+        """
         return {
             'area_width': self.area_width,
             'area_height': self.area_height,
@@ -85,6 +113,11 @@ class SnakeGameState(object):
         }
 
     def deserialize(self, attrs):
+        """
+        Load the instance with values from a serialized dict
+
+        :param dict attrs: dict containing instance values
+        """
         self.area_width = attrs['area_width']
         self.area_height = attrs['area_height']
         self.snake_segments = [Position().deserialize(x) for x in attrs['snake_segments']]
@@ -96,6 +129,27 @@ class SnakeGameState(object):
     def to_string(self, frame_corner_char='+', frame_horiz_char='-', frame_vert_char='|',
                   snake_head_left_char='<', snake_head_right_char='>', snake_head_up_char='^',
                   snake_head_down_char='v', snake_body_char='#', apple_char='@', space_char=' '):
+        """
+        Convert the instance to an ASCII string representing the current game state
+
+        :param str frame_corner_char: Character to use when drawing the corners of the \
+            game area boundary
+        :param str frame_horiz_char: Character to use when drawing the horizontal (top and bottom) \
+            sides of the game area boundary
+        :param str frame_horiz_char: Character to use when drawing the vertical (left and right) \
+            sides of the game area boundary
+        :param str snake_head_left_char: Character to use for the snake head when snake is \
+            moving in the left direction
+        :param str snake_head_right_char: Character to use for the snake head when snake is \
+            moving in the right direction
+        :param str snake_head_up_char: Character to use for the snake head when snake is \
+            moving in the up direction
+        :param str snake_head_down_char: Character to use for the snake head when snake is \
+            moving in the down direction
+        :param str snake_body_char: Character to use when drawing the snake body segments
+        :param str apple_char: Character to use when drawing the apple
+        :param str space_char: Character to use when drawing empty space
+        """
         table = []
 
         # Build the outer boundary/frame
@@ -138,6 +192,9 @@ class SnakeGameState(object):
         rows = [''.join(row) for row in table]
         rows.reverse()
         return '\n'.join(rows)
+
+    def __str__(self):
+        return self.to_string()
 
     def __repr__(self):
         return self.__str__()
@@ -188,7 +245,7 @@ class SnakeGame(object):
                 self.state.snake_direction = new_direction
                 break
 
-        xadd, yadd = MOVEMAP[self.state.snake_direction]
+        xadd, yadd = _MOVEMAP[self.state.snake_direction]
         self.snake_move_ticks = 0
         curr_head = self.state.snake_segments[-1]
         newx = curr_head.x + xadd
