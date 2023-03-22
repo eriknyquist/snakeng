@@ -79,7 +79,7 @@ def main():
     frame_time = 1.0 / float(args.fps)
     keyboard.on_press(keypress_event)
 
-    runtime_data["scheduler_event"] = scheduler.enterabs(time.time() + frame_time, 0, process_frame, argument=(game, frame_time))
+    process_frame(game, frame_time)
     scheduler.run()
 
 if __name__ == "__main__":
