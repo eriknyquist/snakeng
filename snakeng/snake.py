@@ -204,7 +204,20 @@ class SnakeGame(object):
     """
     Represents a single instance of a snake game
     """
-    def __init__(self, width=40, height=30, wall_wrap=True, initial_direction=SnakeDirection.DOWN):
+    def __init__(self, width=40, height=30, wall_wrap=True, initial_direction=SnakeDirection.DOWN,
+                 fixed_speed=None):
+        """
+        :param int width: Game area width, in units of snake body segments
+        :param int height: Game area height, in units of snake body segments
+        :param bool wall_wrap: If True, the snake will die when it hits a wall. If False, \
+            the snake will 'teleport' through the wall and continue from the opposite wall.
+        :param int initial_direction: Initial movement direction for the snake. Expected to \
+            be one of the values defined under the SnakeDirection class.
+        :param int fixed_speed: If unset, then the snake speed will automatically increase as \
+            the snake size increases. If set to one of the values defined under the SnakeSpeed \
+            class, then the snake speed will be set to the specified speed for the duration of \
+            the game, with no speed increases.
+        """
         self.state = SnakeGameState(area_width=width, area_height=height, snake_direction=initial_direction)
         self.state.snake_segments.append(Position(x=int(width / 2), y=int(height / 2)))
         self.state.apple_position = self._new_apple_position()
@@ -212,6 +225,10 @@ class SnakeGame(object):
         self.snake_ticks_per_move = SnakeSpeed.SLOW
         self.snake_move_ticks = 0
         self.queued_moves = []
+        self.fixed_speed = fixed_speed
+
+        if self.fixed_speed is not None:
+            self.snake_ticks_per_move = self.fixed_speed
 
     def _new_apple_position(self):
         ret = self.state.snake_segments[-1]
@@ -315,14 +332,15 @@ class SnakeGame(object):
             self.state.dead = True
 
         # Check if we crossed a score threshold
-        if self.snake_ticks_per_move == SnakeSpeed.SLOW:
-            if self.state.score >= SLOW_SCORE_THRESHOLD:
-                self.snake_ticks_per_move = SnakeSpeed.MEDIUM
-        elif self.snake_ticks_per_move == SnakeSpeed.MEDIUM:
-            if self.state.score >= MEDIUM_SCORE_THRESHOLD:
-                self.snake_ticks_per_move = SnakeSpeed.FAST
-        elif self.snake_ticks_per_move == SnakeSpeed.FAST:
-            if self.state.score >= FAST_SCORE_THRESHOLD:
-                self.snake_ticks_per_move = SnakeSpeed.FASTER
+        if self.fixed_speed is None:
+            if self.snake_ticks_per_move == SnakeSpeed.SLOW:
+                if self.state.score >= SLOW_SCORE_THRESHOLD:
+                    self.snake_ticks_per_move = SnakeSpeed.MEDIUM
+            elif self.snake_ticks_per_move == SnakeSpeed.MEDIUM:
+                if self.state.score >= MEDIUM_SCORE_THRESHOLD:
+                    self.snake_ticks_per_move = SnakeSpeed.FAST
+            elif self.snake_ticks_per_move == SnakeSpeed.FAST:
+                if self.state.score >= FAST_SCORE_THRESHOLD:
+                    self.snake_ticks_per_move = SnakeSpeed.FASTER
 
         return self.state
