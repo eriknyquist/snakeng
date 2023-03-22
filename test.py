@@ -5,7 +5,7 @@ import keyboard
 
 from snakeng.snake import SnakeGame, SnakeDirection
 
-FPS = 15
+FPS = 24
 
 runtime_data = {
     'last_direction': None,
@@ -31,7 +31,7 @@ def keypress_event(e):
 
 def draw_screen(state):
     sys.stdout.write(chr(27) + "[2J\n")
-    sys.stdout.write(str(state))
+    sys.stdout.write(state.to_string())
     sys.stdout.flush()
 
 
