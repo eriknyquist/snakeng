@@ -1,0 +1,3 @@
+snakeng-venv/*
+*.pyc
+sphinx_docs/build/*
