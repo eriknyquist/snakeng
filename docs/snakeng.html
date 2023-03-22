@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snakeng package &mdash; snakeng v0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            snakeng
+          </a>
+              <div class="version">
+                v0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">snakeng package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-snakeng.snake">snakeng.snake module</a><ul>
+<li><a class="reference internal" href="#snakeng.snake.Position"><code class="docutils literal notranslate"><span class="pre">Position</span></code></a><ul>
+<li><a class="reference internal" href="#snakeng.snake.Position.__init__"><code class="docutils literal notranslate"><span class="pre">Position.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.Position.deserialize"><code class="docutils literal notranslate"><span class="pre">Position.deserialize()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.Position.serialize"><code class="docutils literal notranslate"><span class="pre">Position.serialize()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.Position.x"><code class="docutils literal notranslate"><span class="pre">Position.x</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.Position.y"><code class="docutils literal notranslate"><span class="pre">Position.y</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeDirection"><code class="docutils literal notranslate"><span class="pre">SnakeDirection</span></code></a><ul>
+<li><a class="reference internal" href="#snakeng.snake.SnakeDirection.DOWN"><code class="docutils literal notranslate"><span class="pre">SnakeDirection.DOWN</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeDirection.LEFT"><code class="docutils literal notranslate"><span class="pre">SnakeDirection.LEFT</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeDirection.RIGHT"><code class="docutils literal notranslate"><span class="pre">SnakeDirection.RIGHT</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeDirection.UP"><code class="docutils literal notranslate"><span class="pre">SnakeDirection.UP</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGame"><code class="docutils literal notranslate"><span class="pre">SnakeGame</span></code></a><ul>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGame.__init__"><code class="docutils literal notranslate"><span class="pre">SnakeGame.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGame.process"><code class="docutils literal notranslate"><span class="pre">SnakeGame.process()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState"><code class="docutils literal notranslate"><span class="pre">SnakeGameState</span></code></a><ul>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.__init__"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.apple_position"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.apple_position</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.area_height"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.area_height</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.area_width"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.area_width</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.dead"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.dead</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.deserialize"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.deserialize()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.score"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.score</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.serialize"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.serialize()</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.snake_direction"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.snake_direction</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.snake_segments"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.snake_segments</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeGameState.to_string"><code class="docutils literal notranslate"><span class="pre">SnakeGameState.to_string()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeSpeed"><code class="docutils literal notranslate"><span class="pre">SnakeSpeed</span></code></a><ul>
+<li><a class="reference internal" href="#snakeng.snake.SnakeSpeed.FAST"><code class="docutils literal notranslate"><span class="pre">SnakeSpeed.FAST</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeSpeed.FASTER"><code class="docutils literal notranslate"><span class="pre">SnakeSpeed.FASTER</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeSpeed.MEDIUM"><code class="docutils literal notranslate"><span class="pre">SnakeSpeed.MEDIUM</span></code></a></li>
+<li><a class="reference internal" href="#snakeng.snake.SnakeSpeed.SLOW"><code class="docutils literal notranslate"><span class="pre">SnakeSpeed.SLOW</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-snakeng">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">snakeng</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">snakeng package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/snakeng.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="snakeng-package">
+<h1>snakeng package<a class="headerlink" href="#snakeng-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-snakeng.snake">
+<span id="snakeng-snake-module"></span><h2>snakeng.snake module<a class="headerlink" href="#module-snakeng.snake" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="snakeng.snake.Position">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">Position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#Position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.Position" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Position of an object within the game area</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.Position.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#snakeng.snake.Position.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.Position.deserialize">
+<span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#Position.deserialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.Position.deserialize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.Position.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#Position.serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.Position.serialize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.Position.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#snakeng.snake.Position.x" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.Position.y">
+<span class="sig-name descname"><span class="pre">y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#snakeng.snake.Position.y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeDirection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeDirection</span></span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeDirection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeDirection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Enumerates all possible directions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>LEFT</strong> (<em>int</em>) – Left movement direction</p></li>
+<li><p><strong>RIGHT</strong> (<em>int</em>) – Right movement direction</p></li>
+<li><p><strong>UP</strong> (<em>int</em>) – Upwards movement direction</p></li>
+<li><p><strong>DOWN</strong> (<em>int</em>) – Downwards movement direction</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeDirection.DOWN">
+<span class="sig-name descname"><span class="pre">DOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#snakeng.snake.SnakeDirection.DOWN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeDirection.LEFT">
+<span class="sig-name descname"><span class="pre">LEFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#snakeng.snake.SnakeDirection.LEFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeDirection.RIGHT">
+<span class="sig-name descname"><span class="pre">RIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#snakeng.snake.SnakeDirection.RIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeDirection.UP">
+<span class="sig-name descname"><span class="pre">UP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#snakeng.snake.SnakeDirection.UP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeGame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wall_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a single instance of a snake game</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGame.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wall_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Game area width, in units of snake body segments</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Game area height, in units of snake body segments</p></li>
+<li><p><strong>wall_wrap</strong> (<em>bool</em>) – If True, the snake will die when it hits a wall. If False,             the snake will ‘teleport’ through the wall and continue from the opposite wall.</p></li>
+<li><p><strong>initial_direction</strong> (<em>int</em>) – Initial movement direction for the snake. Expected to             be one of the values defined under the SnakeDirection class.</p></li>
+<li><p><strong>fixed_speed</strong> (<em>int</em>) – If unset, then the snake speed will automatically increase as             the snake size increases. If set to one of the values defined under the SnakeSpeed             class, then the snake speed will be set to the specified speed for the duration of             the game, with no speed increases.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGame.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame.process" title="Permalink to this definition"></a></dt>
+<dd><p>Process a single frame of the game, and return the new game state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>direction_input</strong> (<em>SnakeGameInput</em>) – direction key currently being pressed, if any</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New game state</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#snakeng.snake.SnakeGameState" title="snakeng.snake.SnakeGameState">SnakeGameState</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the state of the game for a single frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>area_width</strong> (<em>int</em>) – Width of the game area</p></li>
+<li><p><strong>area_height</strong> (<em>int</em>) – Height of the game area</p></li>
+<li><p><strong>snake_segments</strong> (<em>list</em>) – List of Position objects representing the current         position of each segment of the snake</p></li>
+<li><p><strong>snake_direction</strong> (<em>int</em>) – Current movement direction of the snake, one of         the constants defined by the SnakeDirection class</p></li>
+<li><p><strong>score</strong> (<em>int</em>) – Number of apples the snake has collected</p></li>
+<li><p><strong>apple_position</strong> – Position object representing the current position of         the apple, or None if there is no apple.</p></li>
+<li><p><strong>dead</strong> (<em>bool</em>) – True if the snake has died</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#snakeng.snake.SnakeGameState.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.apple_position">
+<span class="sig-name descname"><span class="pre">apple_position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#snakeng.snake.Position" title="snakeng.snake.Position"><span class="pre">Position</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.apple_position" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.area_height">
+<span class="sig-name descname"><span class="pre">area_height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">120</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.area_height" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.area_width">
+<span class="sig-name descname"><span class="pre">area_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">120</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.area_width" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.dead">
+<span class="sig-name descname"><span class="pre">dead</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.dead" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.deserialize">
+<span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState.deserialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState.deserialize" title="Permalink to this definition"></a></dt>
+<dd><p>Load the instance with values from a serialized dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – dict containing instance values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.score" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState.serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState.serialize" title="Permalink to this definition"></a></dt>
+<dd><p>Serialize the instance to a dict suitable for use with json.dump</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>serialized data as a dict</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.snake_direction">
+<span class="sig-name descname"><span class="pre">snake_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.snake_direction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.snake_segments">
+<span class="sig-name descname"><span class="pre">snake_segments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.snake_segments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_corner_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_horiz_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_vert_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'|'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_head_left_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'&lt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_head_right_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'&gt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_head_up_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_head_down_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'v'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_body_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'&#64;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space_char</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState.to_string" title="Permalink to this definition"></a></dt>
+<dd><p>Convert the instance to an ASCII string representing the current game state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_corner_char</strong> (<em>str</em>) – Character to use when drawing the corners of the             game area boundary</p></li>
+<li><p><strong>frame_horiz_char</strong> (<em>str</em>) – Character to use when drawing the horizontal (top and bottom)             sides of the game area boundary</p></li>
+<li><p><strong>frame_horiz_char</strong> – Character to use when drawing the vertical (left and right)             sides of the game area boundary</p></li>
+<li><p><strong>snake_head_left_char</strong> (<em>str</em>) – Character to use for the snake head when snake is             moving in the left direction</p></li>
+<li><p><strong>snake_head_right_char</strong> (<em>str</em>) – Character to use for the snake head when snake is             moving in the right direction</p></li>
+<li><p><strong>snake_head_up_char</strong> (<em>str</em>) – Character to use for the snake head when snake is             moving in the up direction</p></li>
+<li><p><strong>snake_head_down_char</strong> (<em>str</em>) – Character to use for the snake head when snake is             moving in the down direction</p></li>
+<li><p><strong>snake_body_char</strong> (<em>str</em>) – Character to use when drawing the snake body segments</p></li>
+<li><p><strong>apple_char</strong> (<em>str</em>) – Character to use when drawing the apple</p></li>
+<li><p><strong>space_char</strong> (<em>str</em>) – Character to use when drawing empty space</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeSpeed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeSpeed</span></span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeSpeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeSpeed" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Enumerates all possible movement speeds for the snake</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FASTER</strong> (<em>int</em>) – Fastest movement speed (1 segment per frame)</p></li>
+<li><p><strong>FAST</strong> (<em>int</em>) – Fast movement speed (1 segment every 2 frames)</p></li>
+<li><p><strong>MEDIUM</strong> (<em>int</em>) – Medium movement speed (1 segment every 3 frames)</p></li>
+<li><p><strong>SLOW</strong> (<em>int</em>) – Slowest movement speed (1 segment every 4 frames)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeSpeed.FAST">
+<span class="sig-name descname"><span class="pre">FAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#snakeng.snake.SnakeSpeed.FAST" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeSpeed.FASTER">
+<span class="sig-name descname"><span class="pre">FASTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#snakeng.snake.SnakeSpeed.FASTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeSpeed.MEDIUM">
+<span class="sig-name descname"><span class="pre">MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#snakeng.snake.SnakeSpeed.MEDIUM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeSpeed.SLOW">
+<span class="sig-name descname"><span class="pre">SLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#snakeng.snake.SnakeSpeed.SLOW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-snakeng">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-snakeng" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Erik K. Nyquist.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
