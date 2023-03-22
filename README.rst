@@ -2,8 +2,8 @@ snakeng
 -------
 
 ``snakeng`` is a "back-end" implementation of the classic "snake" game. It provides
-an interface to inject directional inputs (up/down/right/left) and produce a data structure
-representing the game state for each frame of gameplay.
+an interface to inject directional inputs (up/down/right/left), and produces a data structure
+representing the game state, for each frame of gameplay.
 
 Additionally, a sample terminal-based implementation of a snake game is provided,
 which can be accessed by running ``snakeng`` as a module:
