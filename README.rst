@@ -13,6 +13,8 @@ Features:
 * Serializable game state object (if you want to e.g. save/load game states to .json files)
 * Configurable snake speed options (fixed speed, or automatically increase speed as snake grows)
 
+For more information, see the `API documentation <https://eriknyquist.github.io/snakeng/snakeng.html>`_.
+
 Install
 -------
 
