@@ -33,6 +33,7 @@ def keypress_event(e):
 
     runtime_data['last_direction'] = ret
 
+
 def draw_screen(state):
     sys.stdout.write("\033[2J\n")
     sys.stdout.write(state.to_string())
