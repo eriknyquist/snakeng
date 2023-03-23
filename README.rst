@@ -13,6 +13,15 @@ Features:
 * Serializable game state object (if you want to e.g. save/load game states to .json files)
 * Configurable snake speed options (fixed speed, or automatically increase speed as snake grows)
 
+Install
+-------
+
+Install via pip:
+
+::
+
+    pip install snakeng
+
 Sample implementation
 ---------------------
 
