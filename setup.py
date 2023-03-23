@@ -7,9 +7,13 @@ from snakeng import __version__
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 README = os.path.join(HERE, "README.rst")
+REQS = os.path.join(HERE, "requirements.txt")
 
 with open(README, 'r') as f:
     long_description = f.read()
+
+with open(REQS, 'r') as fh:
+    requirements = [r.strip() for r in fh.readlines()]
 
 setup(
     name='snakeng',
@@ -24,7 +28,8 @@ setup(
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.7",
-    lassifiers=[
+    install_requires=requirements,
+    classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
