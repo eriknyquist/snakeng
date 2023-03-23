@@ -5,12 +5,17 @@ snakeng
 an interface to inject directional inputs (up/down/right/left), and produces a data structure
 representing the game state, for each frame of gameplay.
 
+Sample implementation
+---------------------
+
 Additionally, a sample terminal-based implementation of a snake game is provided,
 which can be accessed by running ``snakeng`` as a module:
 
 ::
 
     python -m snakeng
+
+.. image:: images/terminal_example.gif
 
 The terminal-based implementation accepts several arguments, detailed here:
 
