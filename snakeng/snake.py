@@ -218,14 +218,20 @@ class SnakeGame(object):
             class, then the snake speed will be set to the specified speed for the duration of \
             the game, with no speed increases.
         """
+        head_pos = Position(x=int(width / 2), y=int(height / 2))
+
         self.state = SnakeGameState(area_width=width, area_height=height, snake_direction=initial_direction)
-        self.state.snake_segments.append(Position(x=int(width / 2), y=int(height / 2)))
+        self.state.snake_segments.append(head_pos)
+
         self.state.apple_position = self._new_apple_position()
         self.wall_wrap = wall_wrap
         self.snake_ticks_per_move = SnakeSpeed.SLOW
         self.snake_move_ticks = 0
         self.queued_moves = []
         self.fixed_speed = fixed_speed
+
+        self.table = [[0 for _ in range(width)] for _ in range(height)]
+        self.table[head_pos.y][head_pos.x] = 1
 
         if self.fixed_speed is not None:
             self.snake_ticks_per_move = self.fixed_speed
@@ -318,18 +324,20 @@ class SnakeGame(object):
         if new_head is None:
             return self.state
 
+        if self.table[new_head.y][new_head.x] == 1:
+            # Snake has hit itself
+            self.state.dead = True
+
         self.state.snake_segments.append(new_head)
+        self.table[new_head.y][new_head.x] = 1
 
         # Check if hit apple, delete apple and increment score if so
         if new_head == self.state.apple_position:
             self.state.apple_position = self._new_apple_position()
             self.state.score += 1
         else:
-            self.state.snake_segments.pop(0)
-
-        # If there are any duplicate positions in the snake segments, snake has hit itself
-        if len(self.state.snake_segments) != len(set(self.state.snake_segments)):
-            self.state.dead = True
+            tail = self.state.snake_segments.pop(0)
+            self.table[tail.y][tail.x] = 0
 
         # Check if we crossed a score threshold
         if self.fixed_speed is None:
