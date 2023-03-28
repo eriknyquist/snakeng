@@ -22,7 +22,7 @@ project = 'snakeng'
 copyright = '2022, Erik K. Nyquist'
 author = 'Erik K. Nyquist'
 
-version = 'v0.0.1'
+version = 'v0.0.2'
 
 # The full version, including alpha/beta/rc tags
 release = version
