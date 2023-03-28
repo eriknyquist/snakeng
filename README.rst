@@ -41,7 +41,7 @@ The terminal-based implementation accepts several arguments, detailed here:
 ::
 
 	usage: snakeng [-h] [-x WIDTH] [-y HEIGHT] [-s {slow,medium,fast,faster}]
-				   [-f FPS]
+				   [-o OUTPUT_FILE] [-i INPUT_FILE] [-f FPS]
 
 	Simple terminal-based snake game showing how to use snakeng to implement a
 	game
@@ -56,7 +56,14 @@ The terminal-based implementation accepts several arguments, detailed here:
 							Sets the snake speed for the whole game. If unset, the
 							snake speed will automatically increase as the snake
 							size increases. (default: None)
+	  -o OUTPUT_FILE, --output-file OUTPUT_FILE
+							If set, the game state will be saved to the specified
+							filename (default: None)
+	  -i INPUT_FILE, --input-file INPUT_FILE
+							If set, the game state will be loaded from the
+							specified filename (default: None)
 	  -f FPS, --fps FPS     Framerate in frames per second (default: 24)
+
 
 NOTE: the sample implementation uses an ANSI escape sequence to clear the terminal screen,
 so it won't work in terminals that don't support ANSI escape sequences.
