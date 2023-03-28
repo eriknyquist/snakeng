@@ -246,12 +246,23 @@ class SnakeGame(object):
             self.state.snake_speed = fixed_speed
 
     def deserialize(self, game_state):
+        """
+        Deserialize a saved game state from a dict and populate this instance with it
+
+        :param dict game_state: saved game state to deserialize
+        """
         self.state.deserialize(game_state)
         self.table = [[0 for _ in range(self.state.area_width)] for _ in range(self.state.area_height)]
         for pos in self.state.snake_segments:
             self.table[pos.y][pos.x] = 1
 
     def serialize(self):
+        """
+        Serialize the current game state to a dict suitable for json.dump
+
+        :return: serialized game state as dict
+        :rtype: dict
+        """
         return self.state.serialize()
 
     def _new_apple_position(self):

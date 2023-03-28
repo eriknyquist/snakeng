@@ -156,6 +156,9 @@
 <span class="sd">        position of each segment of the snake</span>
 <span class="sd">    :ivar int snake_direction: Current movement direction of the snake, one of \</span>
 <span class="sd">        the constants defined by the SnakeDirection class</span>
+<span class="sd">    :ivar int snake_speed: Current movement speed of the snake, one of \</span>
+<span class="sd">        the constants defined by the SnakeSpeed class</span>
+<span class="sd">    :ivar fixed_speed: If True, snake speed does not change relative to snake size</span>
 <span class="sd">    :ivar int score: Number of apples the snake has collected</span>
 <span class="sd">    :ivar apple_position: Position object representing the current position of \</span>
 <span class="sd">        the apple, or None if there is no apple.</span>
@@ -165,9 +168,12 @@
     <span class="n">area_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span>
     <span class="n">snake_segments</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[])</span>
     <span class="n">snake_direction</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span>
+    <span class="n">snake_speed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span>
+    <span class="n">fixed_speed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">apple_position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">dead</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
 
 <div class="viewcode-block" id="SnakeGameState.serialize"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGameState.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -182,7 +188,9 @@
             <span class="s1">&#39;snake_segments&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">],</span>
             <span class="s1">&#39;snake_direction&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span><span class="p">,</span>
             <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
-            <span class="s1">&#39;apple_position&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apple_position</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+            <span class="s1">&#39;apple_position&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apple_position</span><span class="o">.</span><span class="n">serialize</span><span class="p">(),</span>
+            <span class="s1">&#39;snake_speed&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_speed</span><span class="p">,</span>
+            <span class="s1">&#39;fixed_speed&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span>
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="SnakeGameState.deserialize"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGameState.deserialize">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
@@ -196,7 +204,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">snake_segments</span> <span class="o">=</span> <span class="p">[</span><span class="n">Position</span><span class="p">()</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;snake_segments&#39;</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;snake_direction&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">apple_position</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;apple_position&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apple_position</span> <span class="o">=</span> <span class="n">Position</span><span class="p">()</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;apple_position&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;snake_speed&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;fixed_speed&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="SnakeGameState.to_string"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGameState.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_corner_char</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">frame_horiz_char</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">frame_vert_char</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span>
@@ -291,17 +301,42 @@
 <span class="sd">            class, then the snake speed will be set to the specified speed for the duration of \</span>
 <span class="sd">            the game, with no speed increases.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">head_pos</span> <span class="o">=</span> <span class="n">Position</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">SnakeGameState</span><span class="p">(</span><span class="n">area_width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">area_height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">snake_direction</span><span class="o">=</span><span class="n">initial_direction</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Position</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head_pos</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">apple_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_apple_position</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_wrap</span> <span class="o">=</span> <span class="n">wall_wrap</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">snake_move_ticks</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queued_moves</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span> <span class="o">=</span> <span class="n">fixed_speed</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">head_pos</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">head_pos</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">fixed_speed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">fixed_speed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">fixed_speed</span></div>
+
+<div class="viewcode-block" id="SnakeGame.deserialize"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGame.deserialize">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deserialize a saved game state from a dict and populate this instance with it</span>
+
+<span class="sd">        :param dict game_state: saved game state to deserialize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">game_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_width</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_height</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="SnakeGame.serialize"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGame.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Serialize the current game state to a dict suitable for json.dump</span>
+
+<span class="sd">        :return: serialized game state as dict</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_new_apple_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -326,7 +361,7 @@
         <span class="k">return</span> <span class="n">ret</span>
 
     <span class="k">def</span> <span class="nf">_new_head</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_move_ticks</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_move_ticks</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">queued_moves</span><span class="p">:</span>
@@ -391,30 +426,32 @@
         <span class="k">if</span> <span class="n">new_head</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">new_head</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">new_head</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Snake has hit itself</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">dead</span> <span class="o">=</span> <span class="kc">True</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_head</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">new_head</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">new_head</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="c1"># Check if hit apple, delete apple and increment score if so</span>
         <span class="k">if</span> <span class="n">new_head</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">apple_position</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">apple_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_apple_position</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="c1"># If there are any duplicate positions in the snake segments, snake has hit itself</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">dead</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">tail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_segments</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">[</span><span class="n">tail</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">tail</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Check if we crossed a score threshold</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_speed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">fixed_speed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">SLOW_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">MEDIUM_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">FAST_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">snake_ticks_per_move</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FASTER</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FASTER</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span></div></div>
 </pre></div>
