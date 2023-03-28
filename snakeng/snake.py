@@ -83,6 +83,9 @@ class SnakeGameState(object):
         position of each segment of the snake
     :ivar int snake_direction: Current movement direction of the snake, one of \
         the constants defined by the SnakeDirection class
+    :ivar int snake_speed: Current movement speed of the snake, one of \
+        the constants defined by the SnakeSpeed class
+    :ivar fixed_speed: If True, snake speed does not change relative to snake size
     :ivar int score: Number of apples the snake has collected
     :ivar apple_position: Position object representing the current position of \
         the apple, or None if there is no apple.
@@ -92,9 +95,12 @@ class SnakeGameState(object):
     area_height: int = 120
     snake_segments: List = field(default_factory=lambda: [])
     snake_direction: int = SnakeDirection.UP
+    snake_speed: int = SnakeSpeed.SLOW
+    fixed_speed: bool = False
     score: int = 0
     apple_position: Position = None
     dead: bool = False
+
 
     def serialize(self):
         """
@@ -109,7 +115,9 @@ class SnakeGameState(object):
             'snake_segments': [x.serialize() for x in self.snake_segments],
             'snake_direction': self.snake_direction,
             'score': self.score,
-            'apple_position': self.apple_position.serialize()
+            'apple_position': self.apple_position.serialize(),
+            'snake_speed': self.snake_speed,
+            'fixed_speed': self.fixed_speed
         }
 
     def deserialize(self, attrs):
@@ -123,7 +131,9 @@ class SnakeGameState(object):
         self.snake_segments = [Position().deserialize(x) for x in attrs['snake_segments']]
         self.snake_direction = attrs['snake_direction']
         self.score = attrs['score']
-        self.apple_position = attrs['apple_position']
+        self.apple_position = Position().deserialize(attrs['apple_position'])
+        self.snake_speed = attrs['snake_speed']
+        self.fixed_speed = attrs['fixed_speed']
         return self
 
     def to_string(self, frame_corner_char='+', frame_horiz_char='-', frame_vert_char='|',
@@ -225,16 +235,24 @@ class SnakeGame(object):
 
         self.state.apple_position = self._new_apple_position()
         self.wall_wrap = wall_wrap
-        self.snake_ticks_per_move = SnakeSpeed.SLOW
         self.snake_move_ticks = 0
         self.queued_moves = []
-        self.fixed_speed = fixed_speed
 
         self.table = [[0 for _ in range(width)] for _ in range(height)]
         self.table[head_pos.y][head_pos.x] = 1
 
-        if self.fixed_speed is not None:
-            self.snake_ticks_per_move = self.fixed_speed
+        if fixed_speed is not None:
+            self.state.fixed_speed = True
+            self.state.snake_speed = fixed_speed
+
+    def deserialize(self, game_state):
+        self.state.deserialize(game_state)
+        self.table = [[0 for _ in range(self.state.area_width)] for _ in range(self.state.area_height)]
+        for pos in self.state.snake_segments:
+            self.table[pos.y][pos.x] = 1
+
+    def serialize(self):
+        return self.state.serialize()
 
     def _new_apple_position(self):
         ret = self.state.snake_segments[-1]
@@ -259,7 +277,7 @@ class SnakeGame(object):
         return ret
 
     def _new_head(self):
-        if self.snake_move_ticks < self.snake_ticks_per_move:
+        if self.snake_move_ticks < self.state.snake_speed:
             return None
 
         while self.queued_moves:
@@ -340,15 +358,15 @@ class SnakeGame(object):
             self.table[tail.y][tail.x] = 0
 
         # Check if we crossed a score threshold
-        if self.fixed_speed is None:
-            if self.snake_ticks_per_move == SnakeSpeed.SLOW:
+        if not self.state.fixed_speed:
+            if self.state.snake_speed == SnakeSpeed.SLOW:
                 if self.state.score >= SLOW_SCORE_THRESHOLD:
-                    self.snake_ticks_per_move = SnakeSpeed.MEDIUM
-            elif self.snake_ticks_per_move == SnakeSpeed.MEDIUM:
+                    self.state.snake_speed = SnakeSpeed.MEDIUM
+            elif self.state.snake_speed == SnakeSpeed.MEDIUM:
                 if self.state.score >= MEDIUM_SCORE_THRESHOLD:
-                    self.snake_ticks_per_move = SnakeSpeed.FAST
-            elif self.snake_ticks_per_move == SnakeSpeed.FAST:
+                    self.state.snake_speed = SnakeSpeed.FAST
+            elif self.state.snake_speed == SnakeSpeed.FAST:
                 if self.state.score >= FAST_SCORE_THRESHOLD:
-                    self.snake_ticks_per_move = SnakeSpeed.FASTER
+                    self.state.snake_speed = SnakeSpeed.FASTER
 
         return self.state

@@ -2,6 +2,7 @@ import time
 import sys
 import threading
 import sched
+import json
 import argparse
 
 import keyboard
@@ -61,6 +62,10 @@ def main():
     parser.add_argument('-s', '--fixed-speed', default=None, choices=['slow', 'medium', 'fast', 'faster'],
                         help='Sets the snake speed for the whole game. If unset, the snake speed will '
                         'automatically increase as the snake size increases.')
+    parser.add_argument('-o', '--output-file', default=None, type=str, help='If set, the game state will be'
+                        ' saved to the specified filename')
+    parser.add_argument('-i', '--input-file', default=None, type=str, help='If set, the game state will be'
+                        ' loaded from the specified filename')
     parser.add_argument('-f', '--fps', default=24, type=int, help='Framerate in frames per second')
     args = parser.parse_args()
 
@@ -77,11 +82,21 @@ def main():
             speed = SnakeSpeed.FASTER
 
     game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed)
+
+    if args.input_file is not None:
+        with open(args.input_file, 'r') as fh:
+            game.deserialize(json.load(fh))
+
     frame_time = 1.0 / float(args.fps)
     keyboard.on_press(keypress_event)
 
-    process_frame(game, frame_time)
-    scheduler.run()
+    try:
+        process_frame(game, frame_time)
+        scheduler.run()
+    except KeyboardInterrupt:
+        if args.output_file:
+            with open(args.output_file, 'w') as fh:
+                json.dump(game.serialize(), fh)
 
 if __name__ == "__main__":
     try:
