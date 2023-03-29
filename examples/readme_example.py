@@ -23,8 +23,8 @@ keyboard.on_press(keypress_event)
 game = SnakeGame()
 
 while True:
-    new_state = game.process(last_direction)  # Produce new frame
-    sys.stdout.write("\033[2J\n")             # Clear terminal screen
-    sys.stdout.write(new_state.to_string())   # Print new game state
-    sys.stdout.flush()                        # Flush output
+    new_state = game.process(last_direction)           # Produce new frame
+    new_state_string = new_state.to_string()
+    sys.stdout.write("\033[2J\n" + new_state_string)   # Clear terminal screen and print new game state
+    sys.stdout.flush()                                 # Flush output
     time.sleep(0.05)
