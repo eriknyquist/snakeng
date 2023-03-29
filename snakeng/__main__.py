@@ -7,7 +7,7 @@ import argparse
 
 import keyboard
 
-from snakeng.snake import SnakeGame, SnakeSpeed, SnakeDirection
+from snakeng.snake import SnakeGame, Speed, Direction
 
 scheduler = sched.scheduler(time.time, time.sleep)
 
@@ -22,13 +22,13 @@ def keypress_event(e):
     ret = None
 
     if e.name == 'up':
-        ret = SnakeDirection.UP
+        ret = Direction.UP
     elif e.name == 'down':
-        ret = SnakeDirection.DOWN
+        ret = Direction.DOWN
     elif e.name == 'left':
-        ret = SnakeDirection.LEFT
+        ret = Direction.LEFT
     elif e.name == 'right':
-        ret = SnakeDirection.RIGHT
+        ret = Direction.RIGHT
     elif e.name == 'p':
         runtime_data['paused'] = not runtime_data['paused']
 
@@ -74,13 +74,13 @@ def main():
     if args.fixed_speed is not None:
         args_speed = args.fixed_speed.lower()
         if args_speed == 'slow':
-            speed = SnakeSpeed.SLOW
+            speed = Speed.SLOW
         elif args_speed == 'medium':
-            speed = SnakeSpeed.MEDIUM
+            speed = Speed.MEDIUM
         elif args_speed == 'fast':
-            speed = SnakeSpeed.FAST
+            speed = Speed.FAST
         elif args_speed == 'faster':
-            speed = SnakeSpeed.FASTER
+            speed = Speed.FASTER
 
     game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed, wall_wrap=not args.wall_death)
 

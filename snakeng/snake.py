@@ -8,7 +8,7 @@ MEDIUM_SCORE_THRESHOLD = 25
 FAST_SCORE_THRESHOLD = 70
 
 
-class SnakeDirection(object):
+class Direction(object):
     """
     Enumerates all possible directions
 
@@ -23,7 +23,7 @@ class SnakeDirection(object):
     DOWN = 3
 
 
-class SnakeSpeed(object):
+class Speed(object):
     """
     Enumerates all possible movement speeds for the snake
 
@@ -39,10 +39,10 @@ class SnakeSpeed(object):
 
 
 _MOVEMAP = {
-    SnakeDirection.LEFT: (-1, 0),
-    SnakeDirection.RIGHT: (1, 0),
-    SnakeDirection.UP: (0, 1),
-    SnakeDirection.DOWN: (0, -1)
+    Direction.LEFT: (-1, 0),
+    Direction.RIGHT: (1, 0),
+    Direction.UP: (0, 1),
+    Direction.DOWN: (0, -1)
 }
 
 
@@ -82,9 +82,9 @@ class SnakeGameState(object):
     :ivar list snake_segments: List of Position objects representing the current \
         position of each segment of the snake
     :ivar int snake_direction: Current movement direction of the snake, one of \
-        the constants defined by the SnakeDirection class
+        the constants defined by the Direction class
     :ivar int snake_speed: Current movement speed of the snake, one of \
-        the constants defined by the SnakeSpeed class
+        the constants defined by the Speed class
     :ivar fixed_speed: If True, snake speed does not change relative to snake size
     :ivar int score: Number of apples the snake has collected
     :ivar apple_position: Position object representing the current position of \
@@ -94,8 +94,8 @@ class SnakeGameState(object):
     area_width: int = 120
     area_height: int = 120
     snake_segments: List = field(default_factory=lambda: [])
-    snake_direction: int = SnakeDirection.UP
-    snake_speed: int = SnakeSpeed.SLOW
+    snake_direction: int = Direction.UP
+    snake_speed: int = Speed.SLOW
     fixed_speed: bool = False
     score: int = 0
     apple_position: Position = None
@@ -183,13 +183,13 @@ class SnakeGameState(object):
             table[pos.y][pos.x] = snake_body_char
 
         snake_head_char = '#'
-        if self.snake_direction == SnakeDirection.UP:
+        if self.snake_direction == Direction.UP:
             snake_head_char = snake_head_up_char
-        elif self.snake_direction == SnakeDirection.DOWN:
+        elif self.snake_direction == Direction.DOWN:
             snake_head_char = snake_head_down_char
-        elif self.snake_direction == SnakeDirection.LEFT:
+        elif self.snake_direction == Direction.LEFT:
             snake_head_char = snake_head_left_char
-        elif self.snake_direction == SnakeDirection.RIGHT:
+        elif self.snake_direction == Direction.RIGHT:
             snake_head_char = snake_head_right_char
 
         snakehead = self.snake_segments[-1]
@@ -214,7 +214,7 @@ class SnakeGame(object):
     """
     Represents a single instance of a snake game
     """
-    def __init__(self, width=40, height=30, wall_wrap=True, initial_direction=SnakeDirection.DOWN,
+    def __init__(self, width=40, height=30, wall_wrap=True, initial_direction=Direction.DOWN,
                  fixed_speed=None):
         """
         :param int width: Game area width, in units of snake body segments
@@ -222,9 +222,9 @@ class SnakeGame(object):
         :param bool wall_wrap: If True, the snake will die when it hits a wall. If False, \
             the snake will 'teleport' through the wall and continue from the opposite wall.
         :param int initial_direction: Initial movement direction for the snake. Expected to \
-            be one of the values defined under the SnakeDirection class.
+            be one of the values defined under the Direction class.
         :param int fixed_speed: If unset, then the snake speed will automatically increase as \
-            the snake size increases. If set to one of the values defined under the SnakeSpeed \
+            the snake size increases. If set to one of the values defined under the Speed \
             class, then the snake speed will be set to the specified speed for the duration of \
             the game, with no speed increases.
         """
@@ -277,13 +277,13 @@ class SnakeGame(object):
     def _wall_collision(self, x, y):
         ret = None
         if x <= 0:
-            ret = SnakeDirection.LEFT
+            ret = Direction.LEFT
         elif x >= (self.state.area_width - 1):
-            ret = SnakeDirection.RIGHT
+            ret = Direction.RIGHT
         elif y <= 0:
-            ret = SnakeDirection.DOWN
+            ret = Direction.DOWN
         elif y >= (self.state.area_height - 1):
-            ret = SnakeDirection.UP
+            ret = Direction.UP
 
         return ret
 
@@ -309,22 +309,22 @@ class SnakeGame(object):
                 self.state.dead = True
             else:
                 # Wrap new snake head position around to the opposite wall
-                if collision_dir == SnakeDirection.LEFT:
+                if collision_dir == Direction.LEFT:
                     newx = self.state.area_width - 2
-                elif collision_dir == SnakeDirection.RIGHT:
+                elif collision_dir == Direction.RIGHT:
                     newx = 1
-                elif collision_dir == SnakeDirection.UP:
+                elif collision_dir == Direction.UP:
                     newy = 1
-                elif collision_dir == SnakeDirection.DOWN:
+                elif collision_dir == Direction.DOWN:
                     newy = self.state.area_height - 2
 
         return Position(x=newx, y=newy)
 
     def _opposite_dirs(self, dir1, dir2):
         dirs = [dir1, dir2]
-        if (SnakeDirection.UP in dirs) and (SnakeDirection.DOWN in dirs):
+        if (Direction.UP in dirs) and (Direction.DOWN in dirs):
             return True
-        elif (SnakeDirection.LEFT in dirs) and (SnakeDirection.RIGHT in dirs):
+        elif (Direction.LEFT in dirs) and (Direction.RIGHT in dirs):
             return True
 
         return False
@@ -370,14 +370,14 @@ class SnakeGame(object):
 
         # Check if we crossed a score threshold
         if not self.state.fixed_speed:
-            if self.state.snake_speed == SnakeSpeed.SLOW:
+            if self.state.snake_speed == Speed.SLOW:
                 if self.state.score >= SLOW_SCORE_THRESHOLD:
-                    self.state.snake_speed = SnakeSpeed.MEDIUM
-            elif self.state.snake_speed == SnakeSpeed.MEDIUM:
+                    self.state.snake_speed = Speed.MEDIUM
+            elif self.state.snake_speed == Speed.MEDIUM:
                 if self.state.score >= MEDIUM_SCORE_THRESHOLD:
-                    self.state.snake_speed = SnakeSpeed.FAST
-            elif self.state.snake_speed == SnakeSpeed.FAST:
+                    self.state.snake_speed = Speed.FAST
+            elif self.state.snake_speed == Speed.FAST:
                 if self.state.score >= FAST_SCORE_THRESHOLD:
-                    self.state.snake_speed = SnakeSpeed.FASTER
+                    self.state.snake_speed = Speed.FASTER
 
         return self.state
