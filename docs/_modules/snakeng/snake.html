@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>snakeng.snake &mdash; snakeng v0.0.1 documentation</title>
+  <title>snakeng.snake &mdash; snakeng v0.0.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
             snakeng
           </a>
               <div class="version">
-                v0.0.1
+                v0.0.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -81,7 +81,7 @@
 <span class="n">FAST_SCORE_THRESHOLD</span> <span class="o">=</span> <span class="mi">70</span>
 
 
-<div class="viewcode-block" id="SnakeDirection"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeDirection">[docs]</a><span class="k">class</span> <span class="nc">SnakeDirection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Direction"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.Direction">[docs]</a><span class="k">class</span> <span class="nc">Direction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enumerates all possible directions</span>
 
@@ -96,7 +96,7 @@
     <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">3</span></div>
 
 
-<div class="viewcode-block" id="SnakeSpeed"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeSpeed">[docs]</a><span class="k">class</span> <span class="nc">SnakeSpeed</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Speed"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.Speed">[docs]</a><span class="k">class</span> <span class="nc">Speed</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enumerates all possible movement speeds for the snake</span>
 
@@ -112,10 +112,10 @@
 
 
 <span class="n">_MOVEMAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-    <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-    <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">}</span>
 
 
@@ -155,9 +155,9 @@
 <span class="sd">    :ivar list snake_segments: List of Position objects representing the current \</span>
 <span class="sd">        position of each segment of the snake</span>
 <span class="sd">    :ivar int snake_direction: Current movement direction of the snake, one of \</span>
-<span class="sd">        the constants defined by the SnakeDirection class</span>
+<span class="sd">        the constants defined by the Direction class</span>
 <span class="sd">    :ivar int snake_speed: Current movement speed of the snake, one of \</span>
-<span class="sd">        the constants defined by the SnakeSpeed class</span>
+<span class="sd">        the constants defined by the Speed class</span>
 <span class="sd">    :ivar fixed_speed: If True, snake speed does not change relative to snake size</span>
 <span class="sd">    :ivar int score: Number of apples the snake has collected</span>
 <span class="sd">    :ivar apple_position: Position object representing the current position of \</span>
@@ -167,8 +167,8 @@
     <span class="n">area_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span>
     <span class="n">area_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">120</span>
     <span class="n">snake_segments</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[])</span>
-    <span class="n">snake_direction</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span>
-    <span class="n">snake_speed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span>
+    <span class="n">snake_direction</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span>
+    <span class="n">snake_speed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Speed</span><span class="o">.</span><span class="n">SLOW</span>
     <span class="n">fixed_speed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">score</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">apple_position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">=</span> <span class="kc">None</span>
@@ -256,13 +256,13 @@
             <span class="n">table</span><span class="p">[</span><span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">snake_body_char</span>
 
         <span class="n">snake_head_char</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span>
             <span class="n">snake_head_char</span> <span class="o">=</span> <span class="n">snake_head_up_char</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span>
             <span class="n">snake_head_char</span> <span class="o">=</span> <span class="n">snake_head_down_char</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
             <span class="n">snake_head_char</span> <span class="o">=</span> <span class="n">snake_head_left_char</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_direction</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
             <span class="n">snake_head_char</span> <span class="o">=</span> <span class="n">snake_head_right_char</span>
 
         <span class="n">snakehead</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">snake_segments</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -287,7 +287,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a single instance of a snake game</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="SnakeGame.__init__"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGame.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">wall_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">initial_direction</span><span class="o">=</span><span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span><span class="p">,</span>
+<div class="viewcode-block" id="SnakeGame.__init__"><a class="viewcode-back" href="../../snakeng.html#snakeng.snake.SnakeGame.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">wall_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">initial_direction</span><span class="o">=</span><span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span><span class="p">,</span>
                  <span class="n">fixed_speed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param int width: Game area width, in units of snake body segments</span>
@@ -295,9 +295,9 @@
 <span class="sd">        :param bool wall_wrap: If True, the snake will die when it hits a wall. If False, \</span>
 <span class="sd">            the snake will &#39;teleport&#39; through the wall and continue from the opposite wall.</span>
 <span class="sd">        :param int initial_direction: Initial movement direction for the snake. Expected to \</span>
-<span class="sd">            be one of the values defined under the SnakeDirection class.</span>
+<span class="sd">            be one of the values defined under the Direction class.</span>
 <span class="sd">        :param int fixed_speed: If unset, then the snake speed will automatically increase as \</span>
-<span class="sd">            the snake size increases. If set to one of the values defined under the SnakeSpeed \</span>
+<span class="sd">            the snake size increases. If set to one of the values defined under the Speed \</span>
 <span class="sd">            class, then the snake speed will be set to the specified speed for the duration of \</span>
 <span class="sd">            the game, with no speed increases.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -350,13 +350,13 @@
     <span class="k">def</span> <span class="nf">_wall_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">LEFT</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span>
         <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">RIGHT</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span>
         <span class="k">elif</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span>
         <span class="k">elif</span> <span class="n">y</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span>
 
         <span class="k">return</span> <span class="n">ret</span>
 
@@ -382,22 +382,22 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">dead</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Wrap new snake head position around to the opposite wall</span>
-                <span class="k">if</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
                     <span class="n">newx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_width</span> <span class="o">-</span> <span class="mi">2</span>
-                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
                     <span class="n">newx</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span><span class="p">:</span>
                     <span class="n">newy</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">collision_dir</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span><span class="p">:</span>
                     <span class="n">newy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">area_height</span> <span class="o">-</span> <span class="mi">2</span>
 
         <span class="k">return</span> <span class="n">Position</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">newx</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">newy</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_opposite_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir1</span><span class="p">,</span> <span class="n">dir2</span><span class="p">):</span>
         <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">dir1</span><span class="p">,</span> <span class="n">dir2</span><span class="p">]</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">SnakeDirection</span><span class="o">.</span><span class="n">UP</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">SnakeDirection</span><span class="o">.</span><span class="n">DOWN</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">UP</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">SnakeDirection</span><span class="o">.</span><span class="n">LEFT</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">SnakeDirection</span><span class="o">.</span><span class="n">RIGHT</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="kc">False</span>
@@ -443,15 +443,15 @@
 
         <span class="c1"># Check if we crossed a score threshold</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">fixed_speed</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">SLOW</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">Speed</span><span class="o">.</span><span class="n">SLOW</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">SLOW_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">Speed</span><span class="o">.</span><span class="n">MEDIUM</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">Speed</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">MEDIUM_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FAST</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">Speed</span><span class="o">.</span><span class="n">FAST</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">==</span> <span class="n">Speed</span><span class="o">.</span><span class="n">FAST</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="n">FAST_SCORE_THRESHOLD</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">SnakeSpeed</span><span class="o">.</span><span class="n">FASTER</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snake_speed</span> <span class="o">=</span> <span class="n">Speed</span><span class="o">.</span><span class="n">FASTER</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span></div></div>
 </pre></div>
