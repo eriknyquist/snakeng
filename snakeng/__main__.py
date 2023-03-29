@@ -55,16 +55,19 @@ def main():
                                      "use 'p' to pause, and use 'Ctrl-C' to quit.",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('-x', '--width', default=40, type=int, help='Game area width in characters')
-    parser.add_argument('-y', '--height', default=30, type=int, help='Game area height in characters')
+    parser.add_argument('-x', '--width', default=40, type=int, help='Game area width in characters.')
+    parser.add_argument('-y', '--height', default=30, type=int, help='Game area height in characters.')
+    parser.add_argument('-f', '--fps', default=24, type=int, help='Framerate in frames per second.')
     parser.add_argument('-s', '--fixed-speed', default=None, choices=['slow', 'medium', 'fast', 'faster'],
                         help='Sets the snake speed for the whole game. If unset, the snake speed will '
                         'automatically increase as the snake size increases.')
+    parser.add_argument('-w', '--wall-death', default=False, action='store_true', help='If True, snake '
+                        'will die if it hits a wall. Default behaviour is to "wrap around" and come out of '
+                        'the opposite wall.')
     parser.add_argument('-o', '--output-file', default=None, type=str, help='If set, the game state will be'
-                        ' saved to the specified filename when you quit with Ctrl-C')
+                        ' saved to the specified filename when you quit with Ctrl-C.')
     parser.add_argument('-i', '--input-file', default=None, type=str, help='If set, the game state will be'
-                        ' loaded from the specified filename')
-    parser.add_argument('-f', '--fps', default=24, type=int, help='Framerate in frames per second')
+                        ' loaded from the specified filename.')
     args = parser.parse_args()
 
     speed = None
@@ -79,7 +82,7 @@ def main():
         elif args_speed == 'faster':
             speed = SnakeSpeed.FASTER
 
-    game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed)
+    game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed, wall_wrap=not args.wall_death)
 
     if args.input_file is not None:
         with open(args.input_file, 'r') as fh:
