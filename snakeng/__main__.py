@@ -54,7 +54,9 @@ def process_frame(game, frame_time):
 
 def main():
     parser = argparse.ArgumentParser(prog='snakeng',
-                                     description='Simple terminal-based snake game showing how to use snakeng to implement a game',
+                                     description="Simple terminal-based snake game showing how "
+                                     "to use snakeng. Use arrow keys to change snake direction, "
+                                     "use 'p' to pause, and use 'Ctrl-C' to quit.",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('-x', '--width', default=40, type=int, help='Game area width in characters')
@@ -63,7 +65,7 @@ def main():
                         help='Sets the snake speed for the whole game. If unset, the snake speed will '
                         'automatically increase as the snake size increases.')
     parser.add_argument('-o', '--output-file', default=None, type=str, help='If set, the game state will be'
-                        ' saved to the specified filename')
+                        ' saved to the specified filename when you quit with Ctrl-C')
     parser.add_argument('-i', '--input-file', default=None, type=str, help='If set, the game state will be'
                         ' loaded from the specified filename')
     parser.add_argument('-f', '--fps', default=24, type=int, help='Framerate in frames per second')

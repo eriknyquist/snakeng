@@ -81,8 +81,8 @@ The terminal-based implementation accepts several arguments, detailed here:
 	usage: snakeng [-h] [-x WIDTH] [-y HEIGHT] [-s {slow,medium,fast,faster}]
 				   [-o OUTPUT_FILE] [-i INPUT_FILE] [-f FPS]
 
-	Simple terminal-based snake game showing how to use snakeng to implement a
-	game
+	Simple terminal-based snake game showing how to use snakeng. Use arrow keys to
+	change snake direction, use 'p' to pause, and use 'Ctrl-C' to quit.
 
 	options:
 	  -h, --help            show this help message and exit
@@ -96,7 +96,7 @@ The terminal-based implementation accepts several arguments, detailed here:
 							size increases. (default: None)
 	  -o OUTPUT_FILE, --output-file OUTPUT_FILE
 							If set, the game state will be saved to the specified
-							filename (default: None)
+							filename when you quit with Ctrl-C (default: None)
 	  -i INPUT_FILE, --input-file INPUT_FILE
 							If set, the game state will be loaded from the
 							specified filename (default: None)
