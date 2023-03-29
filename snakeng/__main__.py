@@ -17,22 +17,13 @@ runtime_data = {
     'scheduler_event': None
 }
 
+dirmap = {'up': Direction.UP, 'down': Direction.DOWN, 'left': Direction.LEFT, 'right': Direction.RIGHT}
+speedmap = {'slow': Speed.SLOW, 'medium': Speed.MEDIUM, 'fast': Speed.FAST, 'faster': Speed.FASTER}
 
 def keypress_event(e):
-    ret = None
-
-    if e.name == 'up':
-        ret = Direction.UP
-    elif e.name == 'down':
-        ret = Direction.DOWN
-    elif e.name == 'left':
-        ret = Direction.LEFT
-    elif e.name == 'right':
-        ret = Direction.RIGHT
-    elif e.name == 'p':
-        runtime_data['paused'] = not runtime_data['paused']
-
-    runtime_data['last_direction'] = ret
+    newdir = dirmap.get(e.name, None)
+    if newdir is not None:
+        runtime_data['last_direction'] = newdir
 
 
 def process_frame(game, frame_time):
@@ -73,14 +64,7 @@ def main():
     speed = None
     if args.fixed_speed is not None:
         args_speed = args.fixed_speed.lower()
-        if args_speed == 'slow':
-            speed = Speed.SLOW
-        elif args_speed == 'medium':
-            speed = Speed.MEDIUM
-        elif args_speed == 'fast':
-            speed = Speed.FAST
-        elif args_speed == 'faster':
-            speed = Speed.FASTER
+        speed = speedmap.get(args_speed)
 
     game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed, wall_wrap=not args.wall_death)
 
