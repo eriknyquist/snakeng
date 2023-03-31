@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to snakeng’s documentation! &mdash; snakeng v0.0.2 documentation</title>
+  <title>Welcome to snakeng’s documentation! &mdash; snakeng v1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
             snakeng
           </a>
               <div class="version">
-                v0.0.2
+                v1.0.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -95,6 +95,7 @@ implemented and played on various platforms.</p>
 <li><p>Configurable wall behaviour (teleport/wrap or death)</p></li>
 <li><p>Serializable game state object (if you want to e.g. save/load game states to .json files)</p></li>
 <li><p>Configurable snake speed options (fixed speed, or automatically increase speed as snake grows)</p></li>
+<li><p>Configurable apple behaviour (set time before apples disappear, or make apples permanent until collected)</p></li>
 </ul>
 <p>For more information, see the <a class="reference external" href="https://eriknyquist.github.io/snakeng/snakeng.html">API documentation</a>.</p>
 </section>
@@ -144,7 +145,7 @@ which can be accessed by running <code class="docutils literal notranslate"><spa
 <p>The terminal-based implementation accepts several arguments, detailed here:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">snakeng</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">x</span> <span class="n">WIDTH</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">y</span> <span class="n">HEIGHT</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="n">FPS</span><span class="p">]</span>
                <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="p">{</span><span class="n">slow</span><span class="p">,</span><span class="n">medium</span><span class="p">,</span><span class="n">fast</span><span class="p">,</span><span class="n">faster</span><span class="p">}]</span> <span class="p">[</span><span class="o">-</span><span class="n">w</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT_FILE</span><span class="p">]</span>
-               <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INPUT_FILE</span><span class="p">]</span>
+               <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">INPUT_FILE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">a</span> <span class="n">APPLE_TICKS</span><span class="p">]</span>
 
 <span class="n">Simple</span> <span class="n">terminal</span><span class="o">-</span><span class="n">based</span> <span class="n">snake</span> <span class="n">game</span> <span class="n">showing</span> <span class="n">how</span> <span class="n">to</span> <span class="n">use</span> <span class="n">snakeng</span><span class="o">.</span> <span class="n">Use</span> <span class="n">arrow</span> <span class="n">keys</span> <span class="n">to</span>
 <span class="n">change</span> <span class="n">snake</span> <span class="n">direction</span><span class="p">,</span> <span class="n">use</span> <span class="s1">&#39;p&#39;</span> <span class="n">to</span> <span class="n">pause</span><span class="p">,</span> <span class="ow">and</span> <span class="n">use</span> <span class="s1">&#39;Ctrl-C&#39;</span> <span class="n">to</span> <span class="n">quit</span><span class="o">.</span>
@@ -169,10 +170,19 @@ which can be accessed by running <code class="docutils literal notranslate"><spa
   <span class="o">-</span><span class="n">i</span> <span class="n">INPUT_FILE</span><span class="p">,</span> <span class="o">--</span><span class="nb">input</span><span class="o">-</span><span class="n">file</span> <span class="n">INPUT_FILE</span>
                         <span class="n">If</span> <span class="nb">set</span><span class="p">,</span> <span class="n">the</span> <span class="n">game</span> <span class="n">state</span> <span class="n">will</span> <span class="n">be</span> <span class="n">loaded</span> <span class="kn">from</span> <span class="nn">the</span>
                         <span class="n">specified</span> <span class="n">filename</span><span class="o">.</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">p</span><span class="p">,</span> <span class="o">--</span><span class="n">permanent</span><span class="o">-</span><span class="n">apples</span>
+                        <span class="n">If</span> <span class="kc">True</span><span class="p">,</span> <span class="n">apples</span> <span class="n">will</span> <span class="n">stay</span> <span class="n">forever</span> <span class="n">until</span> <span class="n">collected</span><span class="o">.</span>
+                        <span class="n">Default</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">disappear</span> <span class="n">after</span> <span class="n">a</span> <span class="n">fixed</span> <span class="n">number</span> <span class="n">of</span>
+                        <span class="n">frames</span><span class="o">.</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="kc">False</span><span class="p">)</span>
+  <span class="o">-</span><span class="n">a</span> <span class="n">APPLE_TICKS</span><span class="p">,</span> <span class="o">--</span><span class="n">apple</span><span class="o">-</span><span class="n">ticks</span> <span class="n">APPLE_TICKS</span>
+                        <span class="n">Specifies</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">frames</span> <span class="n">before</span> <span class="n">an</span> <span class="n">uncollected</span>
+                        <span class="n">apple</span> <span class="n">disappears</span><span class="o">.</span> <span class="n">Can</span> <span class="n">only</span> <span class="n">be</span> <span class="n">used</span> <span class="k">if</span> <span class="o">-</span><span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">set</span><span class="o">.</span>
+                        <span class="n">Default</span> <span class="ow">is</span> <span class="n">to</span> <span class="n">use</span> <span class="n">the</span> <span class="n">width</span> <span class="ow">or</span> <span class="n">height</span> <span class="n">of</span> <span class="n">the</span> <span class="n">game</span>
+                        <span class="n">area</span><span class="p">,</span> <span class="n">whichever</span> <span class="ow">is</span> <span class="n">larger</span><span class="o">.</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">NOTE</span><span class="p">:</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">implementation</span> <span class="n">uses</span> <span class="n">an</span> <span class="n">ANSI</span> <span class="n">escape</span> <span class="n">sequence</span> <span class="n">to</span> <span class="n">clear</span> <span class="n">the</span> <span class="n">terminal</span> <span class="n">screen</span><span class="p">,</span>
+<span class="n">so</span> <span class="n">it</span> <span class="n">won</span><span class="s1">&#39;t work in terminals that don&#39;</span><span class="n">t</span> <span class="n">support</span> <span class="n">ANSI</span> <span class="n">escape</span> <span class="n">sequences</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>NOTE: the sample implementation uses an ANSI escape sequence to clear the terminal screen,
-so it won’t work in terminals that don’t support ANSI escape sequences.</p>
 </section>
 <section id="contributions">
 <h2>Contributions<a class="headerlink" href="#contributions" title="Permalink to this heading"></a></h2>

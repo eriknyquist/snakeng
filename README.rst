@@ -12,6 +12,7 @@ Features:
 * Configurable wall behaviour (teleport/wrap or death)
 * Serializable game state object (if you want to e.g. save/load game states to .json files)
 * Configurable snake speed options (fixed speed, or automatically increase speed as snake grows)
+* Configurable apple behaviour (set time before apples disappear, or make apples permanent until collected)
 
 For more information, see the `API documentation <https://eriknyquist.github.io/snakeng/snakeng.html>`_.
 
@@ -72,7 +73,7 @@ The terminal-based implementation accepts several arguments, detailed here:
 
     usage: snakeng [-h] [-x WIDTH] [-y HEIGHT] [-f FPS]
                    [-s {slow,medium,fast,faster}] [-w] [-o OUTPUT_FILE]
-                   [-i INPUT_FILE]
+                   [-i INPUT_FILE] [-p] [-a APPLE_TICKS]
 
     Simple terminal-based snake game showing how to use snakeng. Use arrow keys to
     change snake direction, use 'p' to pause, and use 'Ctrl-C' to quit.
@@ -97,9 +98,17 @@ The terminal-based implementation accepts several arguments, detailed here:
       -i INPUT_FILE, --input-file INPUT_FILE
                             If set, the game state will be loaded from the
                             specified filename. (default: None)
-
-NOTE: the sample implementation uses an ANSI escape sequence to clear the terminal screen,
-so it won't work in terminals that don't support ANSI escape sequences.
+      -p, --permanent-apples
+                            If True, apples will stay forever until collected.
+                            Default is to disappear after a fixed number of
+                            frames. (default: False)
+      -a APPLE_TICKS, --apple-ticks APPLE_TICKS
+                            Specifies the number of frames before an uncollected
+                            apple disappears. Can only be used if -p is not set.
+                            Default is to use the width or height of the game
+                            area, whichever is larger. (default: None)
+    NOTE: the sample implementation uses an ANSI escape sequence to clear the terminal screen,
+    so it won't work in terminals that don't support ANSI escape sequences.
 
 Contributions
 -------------
