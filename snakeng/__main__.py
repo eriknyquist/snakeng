@@ -62,14 +62,25 @@ def main():
                         ' saved to the specified filename when you quit with Ctrl-C.')
     parser.add_argument('-i', '--input-file', default=None, type=str, help='If set, the game state will be'
                         ' loaded from the specified filename.')
+    parser.add_argument('-p', '--permanent-apples', default=False, action='store_true', help='If True, apples '
+                        'will stay forever until collected. Default is to disappear after a fixed number of '
+                        'frames.')
+    parser.add_argument('-a', '--apple-ticks', default=None, type=int, help='Specifies the number of frames '
+                        'before an uncollected apple disappears. Can only be used if -p is not set. Default is '
+                        'to use the width or height of the game area, whichever is larger.')
     args = parser.parse_args()
+
+    if args.permanent_apples and (args.apple_ticks is not None):
+        print("Error: -a/--apple-ticks can not be used if -p/--permanent-apples is set")
+        return
 
     speed = None
     if args.fixed_speed is not None:
         args_speed = args.fixed_speed.lower()
         speed = speedmap.get(args_speed)
 
-    game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed, wall_wrap=not args.wall_death)
+    game = SnakeGame(width=args.width, height=args.height, fixed_speed=speed, wall_wrap=not args.wall_death,
+                     apples_disappear=not args.permanent_apples, apple_disappear_ticks=args.apple_ticks)
 
     if args.input_file is not None:
         with open(args.input_file, 'r') as fh:
