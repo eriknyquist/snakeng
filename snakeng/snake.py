@@ -63,13 +63,108 @@ class Position(object):
     def __neq__(self, other):
         return not self.__eq__(other)
 
+    def __add__(self, other):
+        return Position(x=self.x + other.x, y=self.y + other.y)
+
+    def __sub__(self, other):
+        return Position(x=self.x - other.x, y=self.y - other.y)
+
     def serialize(self):
-        return {'x': self.x, 'y': self.y}
+        return [self.x, self.y]
 
     def deserialize(self, attrs):
-        self.x = attrs['x']
-        self.y = attrs['y']
+        self.x = attrs[0]
+        self.y = attrs[1]
         return self
+
+
+def _direction_between_points(startpos, endpos, allow_jumps=False):
+    ret = None
+    diff = endpos - startpos
+
+    if (not allow_jumps) and ((abs(diff.x) > 1) or (abs(diff.y) > 1)):
+        return None
+
+    if diff.x < 0:
+        ret = Direction.LEFT
+    elif diff.x > 0:
+        ret = Direction.RIGHT
+    elif diff.y < 0:
+        ret = Direction.DOWN
+    elif diff.y > 0:
+        ret = Direction.UP
+
+    return ret
+
+def _serialize_snake_positions(positions):
+    """
+    Compress all snake segment positions to a list of only the head, tail and corner positions
+    """
+    ret = []
+    chunk = []
+    last_pos = None
+    last_direction = None
+
+    for pos in positions:
+        if last_pos is None:
+            chunk.append([pos.x, pos.y])
+        else:
+            direction = _direction_between_points(last_pos, pos)
+            if direction is None:
+                # Wall wrap
+                if not ((chunk[-1][0] == last_pos.x) and (chunk[-1][1] == last_pos.y)):
+                    chunk.append((last_pos.x, last_pos.y))
+
+                ret.append(chunk)
+                chunk = [(pos.x, pos.y)]
+                last_pos = pos
+            else:
+                if last_direction is not None:
+                    if last_direction != direction:
+                        chunk.append((last_pos.x, last_pos.y))
+
+            last_direction = direction
+
+        last_pos = pos
+
+    chunk.append((positions[-1].x, positions[-1].y))
+    ret.append(chunk)
+
+    return ret
+
+def _draw_line(startpos, endpos):
+    diff = endpos - startpos
+    direction = _direction_between_points(startpos, endpos, allow_jumps=True)
+    move = _MOVEMAP[direction]
+
+    ret = [startpos]
+    newpos = startpos
+    while newpos != endpos:
+        newpos = Position(x=newpos.x + move[0], y=newpos.y + move[1])
+        ret.append(newpos)
+
+    return ret
+
+def _deserialize_snake_positions(attrs):
+    """
+    Convert a serialized list of snake head, tail and corner positions, to a full
+    list of snake segment positions
+    """
+    ret = []
+    for chunk in attrs:
+        for i in range(len(chunk[:-1])):
+            x = chunk[i][0]
+            y = chunk[i][1]
+            nextx = chunk[i + 1][0]
+            nexty = chunk[i + 1][1]
+
+            newps = _draw_line(Position(x=x, y=y), Position(x=nextx, y=nexty))
+            if ret and (newps[0] == ret[-1]) and (len(newps) > 2):
+                newps.pop(0)
+
+            ret.extend(newps)
+
+    return ret
 
 
 @dataclass
@@ -112,7 +207,7 @@ class SnakeGameState(object):
         return {
             'area_width': self.area_width,
             'area_height': self.area_height,
-            'snake_segments': [x.serialize() for x in self.snake_segments],
+            'snake_segments': _serialize_snake_positions(self.snake_segments),
             'snake_direction': self.snake_direction,
             'score': self.score,
             'apple_position': self.apple_position.serialize(),
@@ -128,7 +223,7 @@ class SnakeGameState(object):
         """
         self.area_width = attrs['area_width']
         self.area_height = attrs['area_height']
-        self.snake_segments = [Position().deserialize(x) for x in attrs['snake_segments']]
+        self.snake_segments = _deserialize_snake_positions(attrs['snake_segments'])
         self.snake_direction = attrs['snake_direction']
         self.score = attrs['score']
         self.apple_position = Position().deserialize(attrs['apple_position'])

@@ -22,7 +22,10 @@ speedmap = {'slow': Speed.SLOW, 'medium': Speed.MEDIUM, 'fast': Speed.FAST, 'fas
 
 def keypress_event(e):
     newdir = dirmap.get(e.name, None)
-    if newdir is not None:
+    if newdir is None:
+        if e.name == 'p':
+            runtime_data['paused'] = not runtime_data['paused']
+    else:
         runtime_data['last_direction'] = newdir
 
 
