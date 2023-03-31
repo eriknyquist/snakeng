@@ -12,7 +12,6 @@ from snakeng.snake import SnakeGame, Speed, Direction
 scheduler = sched.scheduler(time.time, time.sleep)
 
 runtime_data = {
-    'last_direction': None,
     'paused': False,
     'scheduler_event': None
 }
@@ -20,20 +19,12 @@ runtime_data = {
 dirmap = {'up': Direction.UP, 'down': Direction.DOWN, 'left': Direction.LEFT, 'right': Direction.RIGHT}
 speedmap = {'slow': Speed.SLOW, 'medium': Speed.MEDIUM, 'fast': Speed.FAST, 'faster': Speed.FASTER}
 
-def keypress_event(e):
-    newdir = dirmap.get(e.name, None)
-    if newdir is None:
-        if e.name == 'p':
-            runtime_data['paused'] = not runtime_data['paused']
-    else:
-        runtime_data['last_direction'] = newdir
-
 
 def process_frame(game, frame_time):
     runtime_data["scheduler_event"] = scheduler.enterabs(time.time() + frame_time, 0, process_frame, argument=(game, frame_time))
 
     if not runtime_data['paused']:
-        new_state = game.process(runtime_data['last_direction'])
+        new_state = game.process()
         new_state_string = new_state.to_string()
         sys.stdout.write("\033[2J\n" + new_state_string)
         sys.stdout.flush()
@@ -87,6 +78,15 @@ def main():
             game.deserialize(json.load(fh))
 
     frame_time = 1.0 / float(args.fps)
+
+    def keypress_event(e):
+        newdir = dirmap.get(e.name, None)
+        if newdir is None:
+            if e.name == 'p':
+                runtime_data['paused'] = not runtime_data['paused']
+        else:
+            game.direction_input(newdir)
+
     keyboard.on_press(keypress_event)
 
     try:

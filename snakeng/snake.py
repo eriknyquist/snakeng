@@ -380,6 +380,12 @@ class SnakeGame(object):
         """
         return self.state.serialize()
 
+    def direction_input(self, direction):
+        """
+        Provide a new directional input to the game
+        """
+        self.queued_moves.append(direction)
+
     def _new_apple_position(self):
         ret = self.state.snake_segments[-1]
         while ret in self.state.snake_segments:
@@ -408,9 +414,10 @@ class SnakeGame(object):
 
         while self.queued_moves:
             new_direction = self.queued_moves.pop(0)
-            if new_direction != self.state.snake_direction:
-                self.state.snake_direction = new_direction
-                break
+            if (new_direction != self.state.snake_direction):
+                if not self._opposite_dirs(new_direction, self.state.snake_direction):
+                    self.state.snake_direction = new_direction
+                    break
 
         xadd, yadd = _MOVEMAP[self.state.snake_direction]
         self.snake_move_ticks = 0
@@ -444,21 +451,15 @@ class SnakeGame(object):
 
         return False
 
-    def process(self, direction_input=None):
+    def process(self):
         """
         Process a single frame of the game, and return the new game state
-
-        :param SnakeGameInput direction_input: direction key currently being pressed, if any
 
         :return: New game state
         :rtype: SnakeGameState
         """
         if self.state.dead:
             return
-
-        if direction_input is not None:
-            if not self._opposite_dirs(direction_input, self.state.snake_direction):
-                self.queued_moves.append(direction_input)
 
         # Handle adding a new head segment in the current direction
         new_head = self._new_head()
