@@ -32,27 +32,27 @@ This is the simplest possible implementation of snake, using ``snakeng``:
 
 .. code:: python
 
-	import sys
-	import time
-	import keyboard
-	from snakeng.snake import SnakeGame, Direction
+    import sys
+    import time
+    import keyboard
+    from snakeng.snake import SnakeGame, Direction
 
-	dirmap = {'up': Direction.UP, 'down': Direction.DOWN, 'left': Direction.LEFT, 'right': Direction.RIGHT}
+    dirmap = {'up': Direction.UP, 'down': Direction.DOWN, 'left': Direction.LEFT, 'right': Direction.RIGHT}
 
-	game = SnakeGame()                 # Create game instance
+    game = SnakeGame()                 # Create game instance
 
-	def keypress_event(e):
-		new_direction = dirmap.get(e.name, None)
-		if new_direction is not None:
-			game.direction_input(new_direction)
+    def keypress_event(e):
+        new_direction = dirmap.get(e.name, None)
+        if new_direction is not None:
+            game.direction_input(new_direction)
 
-	keyboard.on_press(keypress_event)  # Register callback function to save last keypress
+    keyboard.on_press(keypress_event)  # Register callback function to save last keypress
 
-	while True:
-		new_state = game.process()                             # Produce new frame
-		sys.stdout.write("\033[2J\n" + new_state.to_string())  # Clear terminal screen and print new game state
-		sys.stdout.flush()                                     # Flush output
-		time.sleep(0.05)
+    while True:
+        new_state = game.process()                             # Produce new frame
+        sys.stdout.write("\033[2J\n" + new_state.to_string())  # Clear terminal screen and print new game state
+        sys.stdout.flush()                                     # Flush output
+        time.sleep(0.05)
 
 
 Sample command-line (ASCII) implementation
