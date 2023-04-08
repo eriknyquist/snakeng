@@ -158,7 +158,7 @@ def _deserialize_snake_positions(attrs):
             nexty = chunk[i + 1][1]
 
             newps = _draw_line(Position(x=x, y=y), Position(x=nextx, y=nexty))
-            if ret and (newps[0] == ret[-1]) and (len(newps) > 2):
+            if ret and (newps[0] == ret[-1]) and (len(newps) > 1):
                 newps.pop(0)
 
             ret.extend(newps)
@@ -214,7 +214,6 @@ class SnakeGameState(object):
             'area_height': self.area_height,
             'snake_segments': _serialize_snake_positions(self.snake_segments),
             'snake_direction': self.snake_direction,
-            'score': self.score,
             'apple_position': self.apple_position.serialize(),
             'snake_speed': self.snake_speed,
             'fixed_speed': self.fixed_speed,
@@ -233,7 +232,7 @@ class SnakeGameState(object):
         self.area_height = attrs['area_height']
         self.snake_segments = _deserialize_snake_positions(attrs['snake_segments'])
         self.snake_direction = attrs['snake_direction']
-        self.score = attrs['score']
+        self.score = len(self.snake_segments) - 1
         self.apple_position = Position().deserialize(attrs['apple_position'])
         self.snake_speed = attrs['snake_speed']
         self.fixed_speed = attrs['fixed_speed']
