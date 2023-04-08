@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>snakeng package &mdash; snakeng v1.0.0 documentation</title>
+  <title>snakeng package &mdash; snakeng v2.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
             snakeng
           </a>
               <div class="version">
-                v1.0.0
+                v2.0.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -199,18 +199,21 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGame.direction_input">
+<span class="sig-name descname"><span class="pre">direction_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame.direction_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame.direction_input" title="Permalink to this definition"></a></dt>
+<dd><p>Provide a new directional input to the game</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="snakeng.snake.SnakeGame.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame.process" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGame.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGame.process" title="Permalink to this definition"></a></dt>
 <dd><p>Process a single frame of the game, and return the new game state</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>direction_input</strong> (<em>SnakeGameInput</em>) – direction key currently being pressed, if any</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>New game state</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>New game state</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#snakeng.snake.SnakeGameState" title="snakeng.snake.SnakeGameState">SnakeGameState</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#snakeng.snake.SnakeGameState" title="snakeng.snake.SnakeGameState">SnakeGameState</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -233,7 +236,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="snakeng.snake.SnakeGameState">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_speed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apples_disappear:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_disappear_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">snakeng.snake.</span></span><span class="sig-name descname"><span class="pre">SnakeGameState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_speed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apples_disappear:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_disappear_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/snakeng/snake.html#SnakeGameState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#snakeng.snake.SnakeGameState" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Represents the state of the game for a single frame.</p>
 <dl class="field-list simple">
@@ -249,13 +252,14 @@
 <li><p><strong>apple_position</strong> – Position object representing the current position of         the apple, or None if there is no apple.</p></li>
 <li><p><strong>dead</strong> (<em>bool</em>) – True if the snake has died</p></li>
 <li><p><strong>apples_disappear</strong> (<em>bool</em>) – If True, apples will disappear after a fixed period         of time if not collected. If False, apples will stay forever until collected.</p></li>
-<li><p><strong>apple_disappear_ticks</strong> (<em>int</em>) – specifies number of frames before apple disappears.         If set to None, a sane default will be used.</p></li>
+<li><p><strong>apple_disappear_ticks</strong> (<em>int</em>) – specifies number of frames before apple disappears.</p></li>
+<li><p><strong>apple_ticks</strong> (<em>int</em>) – Number of ticks elapsed for current apple.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_speed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apples_disappear:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_disappear_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#snakeng.snake.SnakeGameState.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">area_width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_segments:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_direction:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snake_speed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_speed:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_position:</span> <span class="pre">~snakeng.snake.Position</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dead:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apples_disappear:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_disappear_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apple_ticks:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#snakeng.snake.SnakeGameState.__init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -266,6 +270,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.apple_position">
 <span class="sig-name descname"><span class="pre">apple_position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#snakeng.snake.Position" title="snakeng.snake.Position"><span class="pre">Position</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.apple_position" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="snakeng.snake.SnakeGameState.apple_ticks">
+<span class="sig-name descname"><span class="pre">apple_ticks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#snakeng.snake.SnakeGameState.apple_ticks" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
