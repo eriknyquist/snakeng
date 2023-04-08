@@ -186,8 +186,8 @@ class SnakeGameState(object):
     :ivar bool dead: True if the snake has died
     :ivar bool apples_disappear: If True, apples will disappear after a fixed period \
         of time if not collected. If False, apples will stay forever until collected.
-    :ivar int apple_disappear_ticks: specifies number of frames before apple disappears. \
-        If set to None, a sane default will be used.
+    :ivar int apple_disappear_ticks: specifies number of frames before apple disappears.
+    :ivar int apple_ticks: Number of ticks elapsed for current apple.
     """
     area_width: int = 120
     area_height: int = 120
@@ -200,6 +200,7 @@ class SnakeGameState(object):
     dead: bool = False
     apples_disappear: bool = True
     apple_disappear_ticks: int = None
+    apple_ticks: int = 0
 
     def serialize(self):
         """
@@ -218,7 +219,8 @@ class SnakeGameState(object):
             'snake_speed': self.snake_speed,
             'fixed_speed': self.fixed_speed,
             'apples_disappear': self.apples_disappear,
-            'apple_disappear_ticks': self.apple_disappear_ticks
+            'apple_disappear_ticks': self.apple_disappear_ticks,
+            'apple_ticks': self.apple_ticks
         }
 
     def deserialize(self, attrs):
@@ -237,6 +239,7 @@ class SnakeGameState(object):
         self.fixed_speed = attrs['fixed_speed']
         self.apples_disappear = attrs['apples_disappear']
         self.apple_disappear_ticks = attrs['apple_disappear_ticks']
+        self.apple_ticks = attrs['apple_ticks']
         return self
 
     def to_string(self, frame_corner_char='+', frame_horiz_char='-', frame_vert_char='|',
@@ -350,11 +353,9 @@ class SnakeGame(object):
         self.table[head_pos.y][head_pos.x] = 1
 
         if apple_disappear_ticks is None:
-            self.state.apple_disappear_ticks = max(width, height)
+            self.state.apple_disappear_ticks = max(width, height) * 3
         else:
             self.state.apple_disappear_ticks = apple_disappear_ticks
-
-        self.apple_ticks = 0
 
         if fixed_speed is not None:
             self.state.fixed_speed = True
@@ -466,6 +467,13 @@ class SnakeGame(object):
 
         self.snake_move_ticks += 1
 
+        if self.state.apples_disappear:
+            if self.state.apple_ticks >= self.state.apple_disappear_ticks:
+                self.state.apple_position = self._new_apple_position()
+                self.state.apple_ticks = 0
+
+            self.state.apple_ticks += 1
+
         if new_head is None:
             return self.state
 
@@ -479,18 +487,11 @@ class SnakeGame(object):
         # Check if hit apple, delete apple and increment score if so
         if new_head == self.state.apple_position:
             self.state.apple_position = self._new_apple_position()
-            self.apple_ticks = 0
+            self.state.apple_ticks = 0
             self.state.score += 1
         else:
             tail = self.state.snake_segments.pop(0)
             self.table[tail.y][tail.x] = 0
-
-        if self.state.apples_disappear:
-            if self.apple_ticks >= self.state.apple_disappear_ticks:
-                self.state.apple_position = self._new_apple_position()
-                self.apple_ticks = 0
-
-            self.apple_ticks += 1
 
         # Check if we crossed a score threshold
         if not self.state.fixed_speed:
