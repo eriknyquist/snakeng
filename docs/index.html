@@ -119,17 +119,17 @@ implemented and played on various platforms.</p>
 <span class="n">game</span> <span class="o">=</span> <span class="n">SnakeGame</span><span class="p">()</span>                 <span class="c1"># Create game instance</span>
 
 <span class="k">def</span> <span class="nf">keypress_event</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-        <span class="n">new_direction</span> <span class="o">=</span> <span class="n">dirmap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">new_direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">game</span><span class="o">.</span><span class="n">direction_input</span><span class="p">(</span><span class="n">new_direction</span><span class="p">)</span>
+    <span class="n">new_direction</span> <span class="o">=</span> <span class="n">dirmap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">direction_input</span><span class="p">(</span><span class="n">new_direction</span><span class="p">)</span>
 
 <span class="n">keyboard</span><span class="o">.</span><span class="n">on_press</span><span class="p">(</span><span class="n">keypress_event</span><span class="p">)</span>  <span class="c1"># Register callback function to save last keypress</span>
 
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">new_state</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>                             <span class="c1"># Produce new frame</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[2J</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">new_state</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>  <span class="c1"># Clear terminal screen and print new game state</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>                                     <span class="c1"># Flush output</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">new_state</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>                             <span class="c1"># Produce new frame</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[2J</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">new_state</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>  <span class="c1"># Clear terminal screen and print new game state</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>                                     <span class="c1"># Flush output</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
