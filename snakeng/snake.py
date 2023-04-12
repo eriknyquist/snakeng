@@ -134,8 +134,10 @@ def _serialize_snake_positions(positions):
 def _draw_line(startpos, endpos):
     diff = endpos - startpos
     direction = _direction_between_points(startpos, endpos, allow_jumps=True)
-    move = _MOVEMAP[direction]
+    if direction is None:
+        return [Position(x=startpos.x, y=startpos.y)]
 
+    move = _MOVEMAP[direction]
     ret = [startpos]
     newpos = startpos
     while newpos != endpos:
